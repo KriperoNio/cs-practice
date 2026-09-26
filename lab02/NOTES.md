@@ -1,4 +1,5 @@
-~/задания/cs-practice
+рабочaя папка (~/задания/cs-practice) папка с проектом его файлами + скрытая
+папка .git для работы с git
 сокращ. кэш 9e85619
 Describe local Git states
 
