@@ -9,7 +9,7 @@ result = ''
 if operation == '+':
     result = f'{a + b}'
 elif operation == '-':
-    raise ValueError('Данный функционал еще не доступен')
+    result = f'{a - b}'
 elif operation == '/':
     raise ValueError('Данный функционал еще не доступен')
 
