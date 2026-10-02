@@ -12,5 +12,7 @@ elif operation == '-':
     result = f'{a - b}'
 elif operation == '*':
     result = f'{a * b}'
+elif operation == '/':
+    result = f'{a / b}'
 
 print(result)
