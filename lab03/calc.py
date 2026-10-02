@@ -10,7 +10,7 @@ if operation == '+':
     result = f'{a + b}'
 elif operation == '-':
     result = f'{a - b}'
-elif operation == '/':
-    raise ValueError('Данный функционал еще не доступен')
+elif operation == '*':
+    result = f'{a * b}'
 
 print(result)
