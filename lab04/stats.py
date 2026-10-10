@@ -40,4 +40,4 @@ def average_by_city(records: list[dict]):
 
 # Город с наибольшей средней температурой. 
 def warmest_city(records: list[dict]):
-    raise ValueError('Not implemented')
+    return max(records, key = lambda r: r['temp'])['city']

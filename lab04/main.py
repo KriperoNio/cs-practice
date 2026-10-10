@@ -9,9 +9,8 @@ if __name__ == '__main__':
     correct_lines = len(data.values)
     passed_lines = len(lines) - correct_lines
 
-    for city in total:
-        if best == "" or total[city] / count[city] > total[best] / count[best]:
-            best = city
+    
+    
     print(len(lines))
     print(0)
     print(total[best] / count[best])
