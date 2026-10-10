@@ -1,11 +1,16 @@
 # Разбирает строки журнала, пропуская пустые и негодные.
 def read_valid(lines: list[str]):
+    data: list[dict] = []
+
     for line in lines:
         try:
             parsed_line = parse_record(line)
-            
+
+            data += parsed_line
         except ValueError:
             ...
+
+    return data
 
 # Разбирает строку «город;температура;дата» в словарь.
 def parse_record(line: str):
