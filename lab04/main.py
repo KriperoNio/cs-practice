@@ -6,11 +6,21 @@ if __name__ == '__main__':
 
     data = read_valid(lines)
 
-    correct_lines = len(data.values)
+    correct_lines = len(data)
     passed_lines = len(lines) - correct_lines
 
+    best_avg_temp = warmest_city([
+        {
+            'city': city,
+            'avg_temp': avg_temp
+        } for city, avg_temp in average_by_city(data).items()
+    ])
     
-    
-    print(len(lines))
-    print(0)
-    print(total[best] / count[best])
+    print(correct_lines)
+    print(passed_lines)
+    print('%.1f' % best_avg_temp)
+
+# Азов;24.5;2026-07-01
+# мусор
+# Азов;25.5;2026-07-02
+# Таганрог;30;2026-07-01
