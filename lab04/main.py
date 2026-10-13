@@ -12,7 +12,7 @@ if __name__ == '__main__':
     best_avg_temp = warmest_city([
         {
             'city': city,
-            'avg_temp': avg_temp
+            'temperature': avg_temp
         } for city, avg_temp in average_by_city(data).items()
     ])
     

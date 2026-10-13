@@ -25,7 +25,7 @@ def parse_record(line: str):
     data['date'] = date
 
     try:
-        data['temp'] = float(temp)
+        data['temperature'] = float(temp)
     except:
         raise ValueError(f'Temperature is not float, is {type(temp)}')
 
@@ -44,7 +44,7 @@ def average_by_city(records: list[dict]):
             data[city] = {}
 
         data[city]['count'] = data[city].get('count', 0) + 1
-        data[city]['total_temp'] = data[city].get('total_temp', 0) + record['temp']
+        data[city]['total_temp'] = data[city].get('total_temp', 0) + record['temperature']
 
     return {
         city: stats["total_temp"] / stats["count"] for city, stats in data.items()
@@ -52,4 +52,4 @@ def average_by_city(records: list[dict]):
 
 # Город с наибольшей средней температурой. 
 def warmest_city(records: list[dict]):
-    return max(records, key = lambda r: r['avg_temp'])['avg_temp']
+    return max(records, key = lambda r: r['temperature'])['temperature']
