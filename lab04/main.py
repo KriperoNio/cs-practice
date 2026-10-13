@@ -9,12 +9,8 @@ if __name__ == '__main__':
     correct_lines = len(data)
     passed_lines = len(lines) - correct_lines
 
-    best_avg_temp = warmest_city([
-        {
-            'city': city,
-            'temperature': avg_temp
-        } for city, avg_temp in average_by_city(data).items()
-    ])
+    stat = average_by_city(data)
+    best_avg_temp = max(stat.values())
     
     print(correct_lines)
     print(passed_lines)
