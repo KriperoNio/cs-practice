@@ -52,4 +52,4 @@ def average_by_city(records: list[dict]):
 
 # Город с наибольшей средней температурой. 
 def warmest_city(records: list[dict]):
-    return max(records, key = lambda r: r['temperature'])['temperature']
+    return max(records, key = lambda r: (r['temperature'], r['city']))['city']
