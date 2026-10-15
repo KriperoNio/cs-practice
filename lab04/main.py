@@ -10,7 +10,7 @@ if __name__ == '__main__':
     passed_lines = len(lines) - correct_lines
 
     stat = average_by_city(data)
-    best_avg_temp = max(stat.values())
+    best_avg_temp = max(stat.values() or [0.0])
     
     print(correct_lines)
     print(passed_lines)
