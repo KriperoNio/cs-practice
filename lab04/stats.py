@@ -2,11 +2,11 @@
 def read_valid(lines: list[str]):
     data: list[dict] = []
 
-    for line in lines:
-        if not line.strip():
+    for line in [line.strip() in lines]:
+        if not line:
             continue # Empty — pass
         try:
-            parsed_line = parse_record(line.strip())
+            parsed_line = parse_record(line)
 
             data.append(parsed_line)
         except ValueError:
@@ -32,12 +32,12 @@ def parse_record(line: str):
         raise ValueError(f"Empty data: {line!r}")
 
     try:
-        data['temperature'] = float(temp)
+        data['temperature'] = float(temp.replace(",", "."))
     except:
         raise ValueError(f'Temperature is not float, is {type(temp)}')
 
     if len(data.values()) != 3: 
-        raise ValueError('Not enough fields')
+        raise ValueError('Not enough or too much fields')
     
     return data
 
@@ -59,4 +59,4 @@ def average_by_city(records: list[dict]):
 
 # Город с наибольшей средней температурой. 
 def warmest_city(records: list[dict]):
-    return max(records, key = lambda r: (r['temperature'], r['city']))['city']
+    return min(records, key = lambda r: (-r['temperature'], r['city']))['city']
