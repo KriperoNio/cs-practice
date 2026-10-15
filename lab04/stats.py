@@ -9,8 +9,8 @@ def read_valid(lines: list[str]):
             parsed_line = parse_record(line.strip())
 
             data.append(parsed_line)
-        except ValueError:
-            ...
+        except ValueError as a:
+            print(a)
 
     return data
 
@@ -23,18 +23,20 @@ def parse_record(line: str):
     if not city or not date:
         raise ValueError('Not enough values in field')
 
-    data['city'] = city
+    data['city'] = city.strip()
     if not city:
         raise ValueError(f"Empty city: {line!r}")
     
-    data['date'] = date
+    data['date'] = date.strip()
     if not date:
         raise ValueError(f"Empty data: {line!r}")
 
+    if not temp.strip():
+        raise ValueError(f"Empty tempirature: {line!r}")
     try:
         data['temperature'] = float(temp.replace(",", "."))
     except:
-        raise ValueError(f'Temperature is not float, is {type(temp)}')
+        raise ValueError(f'Temperature is not float, is {type(temp)}({temp})')
 
     if len(data.values()) != 3: 
         raise ValueError('Not enough or too much fields')
