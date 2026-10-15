@@ -10,7 +10,7 @@ def read_valid(lines: list[str]):
 
             data.append(parsed_line)
         except ValueError as a:
-            print(a)
+            ...
 
     return data
 
