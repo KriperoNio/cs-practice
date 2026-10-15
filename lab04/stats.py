@@ -3,6 +3,8 @@ def read_valid(lines: list[str]):
     data: list[dict] = []
 
     for line in lines:
+        if not line.strip():
+            continue # Empty — pass
         try:
             parsed_line = parse_record(line.strip())
 
@@ -22,7 +24,12 @@ def parse_record(line: str):
         raise ValueError('Not enough values in field')
 
     data['city'] = city
+    if not city:
+        raise ValueError(f"Empty city: {line!r}")
+    
     data['date'] = date
+    if not date:
+        raise ValueError(f"Empty data: {line!r}")
 
     try:
         data['temperature'] = float(temp)
