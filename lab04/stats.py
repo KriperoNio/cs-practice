@@ -2,11 +2,11 @@
 def read_valid(lines: list[str]):
     data: list[dict] = []
 
-    for line in [line.strip() in lines]:
-        if not line:
+    for line in lines:
+        if not line.strip():
             continue # Empty — pass
         try:
-            parsed_line = parse_record(line)
+            parsed_line = parse_record(line.strip())
 
             data.append(parsed_line)
         except ValueError:
