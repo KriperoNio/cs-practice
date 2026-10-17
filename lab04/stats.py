@@ -19,9 +19,6 @@ def parse_record(line: str):
     data = {}
 
     city, temp, date = line.split(";")
-    
-    if not city or not date:
-        raise ValueError('Not enough values in field')
 
     data['city'] = city.strip()
     if not city:
