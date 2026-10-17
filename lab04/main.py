@@ -7,7 +7,9 @@ if __name__ == '__main__':
     data = read_valid(lines)
 
     correct_lines = len(data)
-    passed_lines = len(lines) - correct_lines
+    passed_lines = \
+        len([line for line in lines if line.strip() != ""])\
+            - correct_lines
 
     stat = average_by_city(data)
     best_avg_temp = max(stat.values() or [0.0])
