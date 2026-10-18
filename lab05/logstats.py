@@ -67,7 +67,21 @@ def count_levels(lines: list[str]):
 
 # n самых частых сообщений уровня ERROR: пары «сообщение, сколько раз».
 def top_errors(lines: list[str], n: int):
-    return list[list]
+    data = {}
+    
+    for line in lines:
+        if not line.strip():
+            continue
+        try:
+            event = parse_event(line)
+        except ValueError:
+            continue
+        if event["level"] == MessageLevel.ERROR:
+            msg = event["message"]
+            data[msg] = data.get(msg, 0) + 1
+    
+    items = sorted(data.items(), key=lambda kv: (-kv[1], kv[0]))
+    return [[message, count] for message, count in items[:n]]
 
 
 # Текст отчёта: строки «уровень: количество» и список частых ошибок.
