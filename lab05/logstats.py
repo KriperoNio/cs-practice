@@ -19,17 +19,18 @@ class MessageLevel(StrEnum):
 def parse_event(line: str):
     data = {}
 
-    time, level, message = line.split(" ", maxsplit=2)
+    time, level, message = map(lambda el: el.strip(), line.split(" ", maxsplit=2))
 
-    if not time.strip():
+    if not time:
         raise ValueError(f"Time is empty ({type(time)}|{time})")
     data["time"] = time
 
-    if not level.strip():
-        raise ValueError(f"Level is empty ({type(level)}|{level})")
+    # Если строка не с заглавных букв, то это не уровень, что очень критично!
+    if not level or level.upper() != level:
+        raise ValueError(f"Level is ({type(level)}|{level})")
     data["level"] = MessageLevel(level).value
 
-    if not message.strip():
+    if not message:
         raise ValueError(f"Message is empty ({type(message)}|{message})")
     data["message"] = message
 
@@ -50,7 +51,18 @@ assert parse_event("2026-03-01T09:03:55 ERROR- Не удалось открыт�
 
 # Сколько строк каждого уровня. Негодные строки считаются под ключом BROKEN.
 def count_levels(lines: list[str]):
-    return dict
+    data = {}
+
+    for line in lines:
+        level = line.split(" ", maxsplit=2)[1].strip()
+
+        # Если строка не с заглавных букв, то это не уровень, что очень критично!
+        if not level or level.upper() != level:
+            continue
+
+        data[MessageLevel(level).value] = data.get(level, 0) + 1
+
+    return data
 
 
 # n самых частых сообщений уровня ERROR: пары «сообщение, сколько раз».
