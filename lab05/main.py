@@ -18,6 +18,9 @@ def main(file_name):
             except ValueError as e:
                 broken += 1
                 continue
+            if event["level"] == "BROKEN":
+                broken += 1
+                continue
             if event["level"] == "ERROR":
                 errors += 1
 
@@ -37,5 +40,5 @@ def main(file_name):
 
 
 if __name__ == "__main__":
-    file_name = sys.stdin.read().strip() or "events.log"
+    file_name = sys.stdin.readline().strip() or "events.log"
     main(file_name)
