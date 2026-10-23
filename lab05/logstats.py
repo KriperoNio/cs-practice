@@ -17,11 +17,12 @@
 _KNOWN_LEVELS = {"INFO", "DEBUG", "WARNING", "ERROR"}
 
 
-# Строка журнала «время уровень сообщение» в словарь. Негодная строка — ValueError.
 def parse_event(line: str):
     data = {}
 
-    time, level, message = map(lambda el: el.strip(), line.split(" ", maxsplit=2))
+    time, level, message = map(
+        lambda el: el.strip(), line.strip().split(" ", maxsplit=2)
+    )
 
     if not time:
         raise ValueError(f"Time is empty ({type(time)}|{time})")
@@ -30,9 +31,7 @@ def parse_event(line: str):
     # Если строка не с заглавных букв, то это не уровень, что очень критично!
     if not level or level.upper() != level:
         raise ValueError(f"Level is ({type(level)}|{level})")
-    data["level"] = (
-        level if level in _KNOWN_LEVELS else "BROKEN"
-    )
+    data["level"] = level if level in _KNOWN_LEVELS else "BROKEN"
 
     if not message:
         raise ValueError(f"Message is empty ({type(message)}|{message})")
