@@ -52,23 +52,22 @@ assert parse_event("2026-03-01T09:03:55 ERROR- Не удалось открыт�
 # Сколько строк каждого уровня. Негодные строки считаются под ключом BROKEN.
 def count_levels(lines: list[str]):
     data = {}
-
     for line in lines:
-        level = line.split(" ", maxsplit=2)[1].strip()
-
-        # Если строка не с заглавных букв, то это не уровень, что очень критично!
-        if not level or level.upper() != level:
+        if not line.strip():
             continue
-
-        data[MessageLevel(level).value] = data.get(level, 0) + 1
-
+        parts = line.split(" ", maxsplit=2)
+        if len(parts) < 2:
+            key = MessageLevel.BROKEN.value
+        else:
+            key = MessageLevel(parts[1].strip()).value
+        data[key] = data.get(key, 0) + 1
     return data
 
 
 # n самых частых сообщений уровня ERROR: пары «сообщение, сколько раз».
 def top_errors(lines: list[str], n: int):
     data = {}
-    
+
     for line in lines:
         if not line.strip():
             continue
@@ -79,11 +78,22 @@ def top_errors(lines: list[str], n: int):
         if event["level"] == MessageLevel.ERROR:
             msg = event["message"]
             data[msg] = data.get(msg, 0) + 1
-    
+
     items = sorted(data.items(), key=lambda kv: (-kv[1], kv[0]))
     return [[message, count] for message, count in items[:n]]
 
 
 # Текст отчёта: строки «уровень: количество» и список частых ошибок.
 def format_report(counts: dict, errors: list[list]):
-    return str
+    lines = ["Отчёт по журналу", ""]
+
+    for level in sorted(counts):
+        lines.append(f"{level}: {counts[level]}")
+
+    lines.append("")
+    lines.append("Частые ошибки:")
+
+    for message, count in errors:
+        lines.append(f"- {message} — {count}")
+
+    return "\n".join(lines) + "\n"

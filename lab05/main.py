@@ -4,29 +4,36 @@ from logstats import parse_event, count_levels, top_errors, format_report
 
 
 def main(file_name):
-    path = pathlib.Path(__file__).resolve().parent / file_name
+    base = pathlib.Path(__file__).resolve().parent
+    path = base / file_name
 
-    log_lines = []
-    correct_lines, incorrect_lines = 0, 0
+    total, errors, broken = 0, 0, 0
     with open(path, encoding="utf-8") as log:
         for line in log:
+            if not line.strip():
+                continue
+            total += 1
             try:
-                if not line.strip():
-                    continue
-
-                log_lines.append(parse_event(line.strip()))
-
-                correct_lines += 1
-            except Exception as e:
-                incorrect_lines += 1
+                event = parse_event(line.strip())
+            except ValueError as e:
+                broken += 1
+                continue
+            if event["level"] == "ERROR":
+                errors += 1
 
     with open(path, encoding="utf-8") as log:
-        counted_levels = count_levels(log)
-    
-    with open(path, encoding="utf-8") as log:
-        c_top_errors = top_errors(log, 2)
+        counts = count_levels(log)
 
-    print(correct_lines, incorrect_lines, counted_levels, c_top_errors)
+    with open(path, encoding="utf-8") as log:
+        tops = top_errors(log, 2)
+
+    print(total)
+    print(errors)
+    print(broken)
+
+    report = format_report(counts, top)
+    with open(base / "report.txt", "w", encoding="utf-8") as f:
+        f.write(report)
 
 
 if __name__ == "__main__":
