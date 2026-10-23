@@ -31,7 +31,7 @@ def main(file_name):
     print(errors)
     print(broken)
 
-    report = format_report(counts, top)
+    report = format_report(counts, tops)
     with open(base / "report.txt", "w", encoding="utf-8") as f:
         f.write(report)
 
