@@ -58,7 +58,7 @@ def count_levels(lines: list[str]):
     for line in lines:
         if not line.strip():
             continue
-        parts = line.split(" ", maxsplit=2)
+        parts = line.strip().split(" ", maxsplit=2)
         if len(parts) < 2:
             key = "BROKEN"
         else:
