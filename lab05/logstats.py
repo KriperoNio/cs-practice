@@ -1,18 +1,18 @@
-from enum import StrEnum
+# from enum import StrEnum
 
 
-class MessageLevel(StrEnum):
-    INFO = "INFO"
-    DEBUG = "DEBUG"
-    WARNING = "WARNING"
-    ERROR = "ERROR"
+# class MessageLevel(StrEnum):
+#     INFO = "INFO"
+#     DEBUG = "DEBUG"
+#     WARNING = "WARNING"
+#     ERROR = "ERROR"
 
-    BROKEN = "BROKEN"
+#     BROKEN = "BROKEN"
 
-    @classmethod
-    def _missing_(cls, value):
-        # Метод срабатывает, только если переданного value нет среди значений выше
-        return cls.BROKEN
+#     @classmethod
+#     def _missing_(cls, value):
+#         # Метод срабатывает, только если переданного value нет среди значений выше
+#         return cls.BROKEN
 
 
 # Строка журнала «время уровень сообщение» в словарь. Негодная строка — ValueError.
@@ -28,7 +28,7 @@ def parse_event(line: str):
     # Если строка не с заглавных букв, то это не уровень, что очень критично!
     if not level or level.upper() != level:
         raise ValueError(f"Level is ({type(level)}|{level})")
-    data["level"] = MessageLevel(level).value
+    data["level"] = level
 
     if not message:
         raise ValueError(f"Message is empty ({type(message)}|{message})")
@@ -57,9 +57,9 @@ def count_levels(lines: list[str]):
             continue
         parts = line.split(" ", maxsplit=2)
         if len(parts) < 2:
-            key = MessageLevel.BROKEN.value
+            key = "BROKEN"
         else:
-            key = MessageLevel(parts[1].strip()).value
+            key = parts[1].strip()
         data[key] = data.get(key, 0) + 1
     return data
 
@@ -75,7 +75,7 @@ def top_errors(lines: list[str], n: int):
             event = parse_event(line)
         except ValueError:
             continue
-        if event["level"] == MessageLevel.ERROR:
+        if event["level"] == "ERROR":
             msg = event["message"]
             data[msg] = data.get(msg, 0) + 1
 
