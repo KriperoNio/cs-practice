@@ -14,6 +14,8 @@
 #         # Метод срабатывает, только если переданного value нет среди значений выше
 #         return cls.BROKEN
 
+_KNOWN_LEVELS = {"INFO", "DEBUG", "WARNING", "ERROR"}
+
 
 # Строка журнала «время уровень сообщение» в словарь. Негодная строка — ValueError.
 def parse_event(line: str):
@@ -28,7 +30,9 @@ def parse_event(line: str):
     # Если строка не с заглавных букв, то это не уровень, что очень критично!
     if not level or level.upper() != level:
         raise ValueError(f"Level is ({type(level)}|{level})")
-    data["level"] = level
+    data["level"] = (
+        level if level in _KNOWN_LEVELS else "BROKEN"
+    )
 
     if not message:
         raise ValueError(f"Message is empty ({type(message)}|{message})")
@@ -59,7 +63,8 @@ def count_levels(lines: list[str]):
         if len(parts) < 2:
             key = "BROKEN"
         else:
-            key = parts[1].strip()
+            raw = parts[1].strip()
+            key = raw if raw in _KNOWN_LEVELS else "BROKEN"
         data[key] = data.get(key, 0) + 1
     return data
 
