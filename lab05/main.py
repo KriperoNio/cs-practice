@@ -40,5 +40,5 @@ def main(file_name):
 
 
 if __name__ == "__main__":
-    file_name = sys.stdin.readline().strip() or "events.log"
+    file_name = sys.stdin.readline().strip()
     main(file_name)
