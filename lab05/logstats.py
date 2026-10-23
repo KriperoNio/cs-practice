@@ -20,9 +20,7 @@ _KNOWN_LEVELS = {"INFO", "DEBUG", "WARNING", "ERROR"}
 def parse_event(line: str):
     data = {}
 
-    time, level, message = map(
-        lambda el: el.strip(), line.strip().split(" ", maxsplit=2)
-    )
+    time, level, message = map(lambda el: el.strip(), line.strip().split(maxsplit=2))
 
     if not time:
         raise ValueError(f"Time is empty ({type(time)}|{time})")
@@ -38,6 +36,7 @@ def parse_event(line: str):
     data["message"] = message
 
     return data
+
 
 # Сколько строк каждого уровня. Негодные строки считаются под ключом BROKEN.
 def count_levels(lines: list[str]):
