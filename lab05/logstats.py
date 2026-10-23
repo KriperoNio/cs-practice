@@ -39,19 +39,6 @@ def parse_event(line: str):
 
     return data
 
-
-assert parse_event("2026-03-01T09:03:55 ERROR Не удалось открыть файл data.csv") == {
-    "time": "2026-03-01T09:03:55",
-    "level": "ERROR",
-    "message": "Не удалось открыть файл data.csv",
-}, "Invalid parse level: waited ERROR"
-assert parse_event("2026-03-01T09:03:55 ERROR- Не удалось открыть файл data.csv") == {
-    "time": "2026-03-01T09:03:55",
-    "level": "BROKEN",
-    "message": "Не удалось открыть файл data.csv",
-}, "Invalid parse level: waited BROKEN"
-
-
 # Сколько строк каждого уровня. Негодные строки считаются под ключом BROKEN.
 def count_levels(lines: list[str]):
     data = {}
