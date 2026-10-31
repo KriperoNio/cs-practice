@@ -37,13 +37,3 @@ def human_size(n_bytes: int) -> str:
         return f"{size:.0f} {units[unit]}"
 
     return f"{size:.1f} {units[unit]}"
-
-
-paths = ["docs/report.PDF", "notes.txt", "docs/img/logo.png", "Makefile"]
-
-count_by_extension(paths)  # {"pdf": 1, "txt": 1, "png": 1, "": 1}
-deepest_path(paths)  # "docs/img/logo.png"
-
-human_size(900)  # "900 Б"
-human_size(1536)  # "1.5 КБ"
-human_size(5 * 1024 * 1024)  # "5.0 МБ"
