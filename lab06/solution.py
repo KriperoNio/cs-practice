@@ -24,8 +24,19 @@ def deepest_path(paths: list[str]) -> str:
     return min(paths, key=lambda path: (-path.count("/"), path))
 
 
-def human_size(n_bytes: int):
-    return str
+def human_size(n_bytes: int) -> str:
+    units = ["Б", "КБ", "МБ", "ГБ", "ТБ"]
+    size = n_bytes
+    unit = 0
+
+    while size >= 1024 and unit < len(units) - 1:
+        size /= 1024
+        unit += 1
+
+    if unit == 0:
+        return f"{size:.0f} {units[unit]}"
+
+    return f"{size:.1f} {units[unit]}"
 
 
 paths = ["docs/report.PDF", "notes.txt", "docs/img/logo.png", "Makefile"]
