@@ -59,7 +59,7 @@ def parse_settings(lines: list[str]) -> dict:
                     value = int(value)
                 except ValueError:
                     try:
-                        value = float(value)
+                        value = float(value.replace(",", "."))
                     except ValueError:
                         pass
 
