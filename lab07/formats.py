@@ -1,3 +1,6 @@
+import json
+
+
 # Разбирает CSV с заголовком в список словарей. Значения остаются строками.
 def csv_to_records(text: str) -> list[dict]:
     result = []
@@ -68,8 +71,24 @@ def parse_settings(lines: list[str]) -> dict:
 
 
 # Дополняет записи сведениями из словаря по значению ключа key.
-def merge_by_key(rows: list[dict], extra: dict, key: str = id) -> list[dict]: ...
+def merge_by_key(rows: list[dict], extra: dict, key: str = "id") -> list[dict]:
+    result = []
+
+    for row in rows:
+        fragment = {}
+
+        if row[key] in extra:
+            for name, value in extra[row[key]].items():
+                fragment[name] = value
+
+        for name, value in row.items():
+            fragment[name] = value
+
+        result.append(fragment)
+
+    return result
 
 
 # Список словарей в JSON: отступ 2, ключи по алфавиту, кириллица как есть.
-def records_to_json(records: list[dict]) -> str: ...
+def records_to_json(records: list[dict]) -> str:
+    return json.dumps(records, ensure_ascii=False, indent=2, sort_keys=True)
