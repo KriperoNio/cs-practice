@@ -31,7 +31,7 @@ def parse_settings(lines: list[str]) -> dict:
     current_key = None
 
     for line in lines:
-        line = line.split("#")[0].strip()
+        line = line.split("#", 1)[0].strip()
 
         if line == "":
             continue
@@ -48,6 +48,8 @@ def parse_settings(lines: list[str]) -> dict:
             result[key] = []
             current_key = key
             continue
+
+        current_key = None
 
         match value:
             case "true" | "yes":
