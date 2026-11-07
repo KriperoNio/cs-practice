@@ -49,7 +49,7 @@ def parse_settings(lines: list[str]) -> dict:
                         value = int(value)
                     except ValueError:
                         try:
-                            value = float(value)
+                            value = float(value.replace(',', '.'))
                         except ValueError:
                             if value.startswith('"') and value.endswith('"'):
                                 value = value[1:-1]
@@ -80,7 +80,7 @@ def parse_settings(lines: list[str]) -> dict:
                     value = int(value)
                 except ValueError:
                     try:
-                        value = float(value)
+                        value = float(value.replace(',', '.'))
                     except ValueError:
                         if value.startswith('"') and value.endswith('"'):
                             value = value[1:-1]
