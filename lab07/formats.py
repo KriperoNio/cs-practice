@@ -56,14 +56,14 @@ def parse_settings(lines: list[str]) -> dict:
                     value = True
                 case "false" | "no":
                     value = False
-                case _ if value.isdigit():
-                    value = int(value)
                 case _:
-                    value = (
-                        float(value.replace(",", "."))
-                        if ("." in value or "," in value)
-                        else value
-                    )
+                    try:
+                        value = int(value)
+                    except ValueError:
+                        try:
+                            value = float(value.replace(",", "."))
+                        except ValueError:
+                            pass
 
         result[key] = value
 
