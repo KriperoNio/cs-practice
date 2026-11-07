@@ -39,8 +39,8 @@ def parse_settings(lines: list[str]) -> dict:
         if line.startswith("- "):
             value = line[2:]
 
-            if value.startswith(('"', "'")):
-                value = value.replace('"', "").replace("'", "")
+            if value.startswith(('"', "'")) and value.endswith(('"', "'")):
+                value = value[1:-1]
 
             result[current_key].append(value)
             continue
@@ -56,8 +56,8 @@ def parse_settings(lines: list[str]) -> dict:
 
         current_key = None
 
-        if value.startswith(('"', "'")):
-            value = value.replace('"', "").replace("'", "")
+        if value.startswith(('"', "'")) and value.endswith(('"', "'")):
+            value = value[1:-1]
 
         match value:
             case "true" | "yes":
