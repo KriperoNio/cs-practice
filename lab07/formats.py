@@ -8,6 +8,9 @@ def csv_to_records(text: str) -> list[dict]:
 
     formated_text = text.strip().splitlines()
 
+    if len(formated_text) == 0:
+        return result
+
     for key in formated_text[0].split(","):
         keys.append(key.strip())
 
@@ -46,24 +49,19 @@ def parse_settings(lines: list[str]) -> dict:
             current_key = key
             continue
 
-        if value == "true" or value == "yes":
-            value = True
-        elif value == "false" or value == "no":
-            value = False
-        else:
-            match value:
-                case "true" | "yes":
-                    value = True
-                case "false" | "no":
-                    value = False
-                case _:
+        match value:
+            case "true" | "yes":
+                value = True
+            case "false" | "no":
+                value = False
+            case _:
+                try:
+                    value = int(value)
+                except ValueError:
                     try:
-                        value = int(value)
+                        value = float(value)
                     except ValueError:
-                        try:
-                            value = float(value.replace(",", "."))
-                        except ValueError:
-                            pass
+                        pass
 
         result[key] = value
 
