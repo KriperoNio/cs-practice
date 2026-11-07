@@ -63,8 +63,9 @@ def parse_settings(lines: list[str]) -> dict:
                     try:
                         value = float(value)
                     except ValueError:
-                        pass
-
+                        if value.startswith(('"', "'")):
+                            value = value.replace('"', '').replace("'", '')
+            
         result[key] = value
 
     return result
