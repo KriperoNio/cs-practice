@@ -39,10 +39,22 @@ def parse_settings(lines: list[str]) -> dict:
         if line.startswith("- "):
             value = line[2:]
 
-            if value.startswith('"') and value.endswith('"'):
-                value = value[1:-1]
-            elif value.startswith("'") and value.endswith("'"):
-                value = value[1:-1]
+            match value:
+                case "true" | "yes":
+                    value = True
+                case "false" | "no":
+                    value = False
+                case _:
+                    try:
+                        value = int(value)
+                    except ValueError:
+                        try:
+                            value = float(value)
+                        except ValueError:
+                            if value.startswith('"') and value.endswith('"'):
+                                value = value[1:-1]
+                            elif value.startswith("'") and value.endswith("'"):
+                                value = value[1:-1]
 
             result[current_key].append(value)
             continue
@@ -58,11 +70,6 @@ def parse_settings(lines: list[str]) -> dict:
 
         current_key = None
 
-        if value.startswith('"') and value.endswith('"'):
-            value = value[1:-1]
-        elif value.startswith("'") and value.endswith("'"):
-            value = value[1:-1]
-
         match value:
             case "true" | "yes":
                 value = True
@@ -75,7 +82,10 @@ def parse_settings(lines: list[str]) -> dict:
                     try:
                         value = float(value)
                     except ValueError:
-                        pass
+                        if value.startswith('"') and value.endswith('"'):
+                            value = value[1:-1]
+                        elif value.startswith("'") and value.endswith("'"):
+                            value = value[1:-1]
 
         result[key] = value
 
