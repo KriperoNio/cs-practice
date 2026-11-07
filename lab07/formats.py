@@ -9,13 +9,13 @@ def csv_to_records(text: str) -> list[dict]:
     formated_text = text.strip().splitlines()
 
     for key in formated_text[0].split(","):
-        keys.append(key)
+        keys.append(key.strip())
 
     for line in formated_text[1:]:
         fragment = {}
 
         for i, value in enumerate(line.split(",")):
-            fragment[keys[i]] = value
+            fragment[keys[i]] = value.strip()
 
         result.append(fragment)
 
