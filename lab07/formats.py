@@ -37,7 +37,12 @@ def parse_settings(lines: list[str]) -> dict:
             continue
 
         if line.startswith("- "):
-            result[current_key].append(line[2:])
+            value = line[2:]
+            
+            if value.startswith(('"', "'")):
+                value = value.replace('"', '').replace("'", '')
+                
+            result[current_key].append(value)
             continue
 
         key, value = line.split(":", 1)
