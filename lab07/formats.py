@@ -39,7 +39,9 @@ def parse_settings(lines: list[str]) -> dict:
         if line.startswith("- "):
             value = line[2:]
 
-            if value.startswith(('"', "'")) and value.endswith(('"', "'")):
+            if value.startswith('"') and value.endswith('"'):
+                value = value[1:-1]
+            elif value.startswith("'") and value.endswith("'"):
                 value = value[1:-1]
 
             result[current_key].append(value)
@@ -56,7 +58,9 @@ def parse_settings(lines: list[str]) -> dict:
 
         current_key = None
 
-        if value.startswith(('"', "'")) and value.endswith(('"', "'")):
+        if value.startswith('"') and value.endswith('"'):
+            value = value[1:-1]
+        elif value.startswith("'") and value.endswith("'"):
             value = value[1:-1]
 
         match value:
