@@ -60,9 +60,6 @@ def parse_settings(lines: list[str]) -> dict:
                 try:
                     value = int(value)
                 except ValueError:
-                    if "," in value:
-                        raise ValueError("")
-
                     try:
                         value = float(value)
                     except ValueError:
