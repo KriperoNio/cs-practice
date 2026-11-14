@@ -22,6 +22,7 @@ print(f"""
 {hours[::-1]}
 """)
 
+
 temperatures = np.array(
     [
         [12, 14, 13, 15],
@@ -40,6 +41,7 @@ print(f"""
 {temperatures[0:2, 1:]}
 {temperatures[0:2, 1:-1]}
 """)
+
 
 matrix = np.arange(1, 26).reshape(5, 5)
 
@@ -76,6 +78,7 @@ print(f"""
 {changed_matrix}
 {matrix}
 """)
+
 
 numbers = np.arange(12)
 
