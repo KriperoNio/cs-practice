@@ -40,4 +40,4 @@ def celsius_to_fahrenheit(values: list[float]) -> list[float]:
     
     fahrenheit = vector * 9 / 5 + 32
     
-    return fahrenheit
+    return fahrenheit.tolist()
