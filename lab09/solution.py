@@ -6,12 +6,14 @@ def make_hours() -> list[int]:
 
 
 def vector_report(value: list[float]) -> dict:
+    vector = np.array(value, dtype=float)
+    
     return {
-        "third": value[3],
-        "last": value[-1],
-        "middle": value[2:6],
-        "every_second": value[::2],
-        "reversed": value[::-1],
+        "third": vector[2],
+        "last": vector[-1],
+        "middle": vector[2:6],
+        "every_second": vector[::2],
+        "reversed": vector[::-1],
     }
 
 
