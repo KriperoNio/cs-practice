@@ -6,7 +6,7 @@ def make_hours() -> list[int]:
 
 
 def vector_report(value: list[float]) -> dict:
-    vector = np.array(value, dtype=float)
+    vector = np.array(value, dtype=float).tolist()
     
     return {
         "third": vector[2],
